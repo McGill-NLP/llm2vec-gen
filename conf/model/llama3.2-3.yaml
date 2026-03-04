@@ -1,0 +1,9 @@
+defaults:
+  - default # inherit from default config
+  - _self_  # allow overriding
+
+model_name_or_path: meta-llama/Llama-3.2-3B-Instruct
+max_input_length: 512
+
+pretrained_teacher_path: McGill-NLP/LLM2Vec-Meta-Llama-32-3B-Instruct-mntp
+pretrained_teacher_path_2: McGill-NLP/LLM2Vec-Meta-Llama-32-3B-Instruct-mntp-unsup-simcse

@@ -1,0 +1,38 @@
+output_dir: "outputs"
+do_train: true
+do_eval: false
+
+use_peft_for_encoder: false
+encoder_lora_r: 8
+encoder_lora_alpha: 16
+encoder_lora_dropout: 0.05
+pretrained_encoder_path: null
+pretrained_decoder_path: null
+freeze_peft_on_encoder: false
+use_encoder_as_decoder: false
+freeze_decoder_fully: true
+freeze_shared_token_weights: false
+
+gradient_checkpointing: true
+seed: 42
+resume_from_checkpoint: null
+overwrite_output_dir: true
+
+logging_first_step: true
+logging_strategy: steps
+logging_steps: 10
+report_to:
+  - wandb
+
+save_strategy: steps
+save_steps: 100
+
+learning_rate: 0.001
+lr_scheduler_type: linear
+warmup_steps: 100
+max_steps: 20000
+
+per_device_train_batch_size: 32
+
+recon_loss_weight: 1.0
+align_loss_weight: 0.0

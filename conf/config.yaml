@@ -1,0 +1,13 @@
+defaults:
+  - data: dataset  # default dataset
+  - model: qwen3-4
+  - training: default
+  - run: default
+  - special_tokens: total_20
+  - _self_
+
+hydra:
+  run:
+    dir: outputs/${now:%Y-%m-%d}/${hydra.job.name}
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${hydra.job.name} 

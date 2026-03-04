@@ -1,0 +1,4 @@
+special_tokens:
+  - <question1>
+  - <question2>
+special_token_config_name: total_2

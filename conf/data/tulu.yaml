@@ -1,0 +1,6 @@
+defaults:
+  - dataset # inherit from default config
+  - _self_  # allow overriding
+
+dataset_name: original
+hf_dataset_name: "McGill-NLP/llm2vec-gen-tulu"

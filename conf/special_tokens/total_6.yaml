@@ -1,0 +1,8 @@
+special_tokens:
+  - <question1>
+  - <question2>
+  - <question3>
+  - <question4>
+  - <question5>
+  - <question6>
+special_token_config_name: total_6

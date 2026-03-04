@@ -1,0 +1,20 @@
+model_name_or_path: null
+max_input_length: 512
+
+torch_dtype: bfloat16
+token_initialization: "random"
+tokenizer_name: null
+tokenizer_padding_side: "left"
+cache_dir: null
+model_revision: "main"
+token: null
+trust_remote_code: false
+use_fast_tokenizer: true
+low_cpu_mem_usage: false
+
+encoding_mode: last_10_tokens
+add_reconstruction_mlp: true
+add_alignment_mlp: true
+
+pretrained_teacher_path: null
+pretrained_teacher_path_2: null

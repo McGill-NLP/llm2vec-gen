@@ -1,0 +1,6 @@
+defaults:
+  - dataset # inherit from default config
+  - tulu # inherit from tulu config
+  - _self_  # allow overriding
+
+dataset_name: Gemini

@@ -1,0 +1,20 @@
+defaults:
+  - default # inherit from default config
+  - llm2vec-gen # inherit from llm2vec-gen config
+  - _self_  # allow overriding
+
+# Override specific values
+stop_after_steps: 5000
+
+recon_loss_weight: 1.0
+align_loss_weight: 1.0
+
+use_hard_negatives: true
+
+margin_loss_weight: 0.0
+margin_threshold: 0.0
+contrastive_loss_weight: 0.0
+contrastive_scale: 20.0
+contrastive_function: "cosine"
+contrastive_hardness_weighting_alpha: 0.0
+other_sub_losses_weight: 0.0
