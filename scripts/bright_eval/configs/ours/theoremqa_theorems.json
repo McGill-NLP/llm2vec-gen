@@ -1,0 +1,5 @@
+{
+  "instructions": {
+    "query": "Given a Math problem, only find the relevant theorems that help answer the problem, I don't want the answer to the problem: "
+  }
+}

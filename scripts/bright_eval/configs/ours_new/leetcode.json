@@ -1,0 +1,5 @@
+{
+  "instructions": {
+    "query": "Given a coding problem, generate relevant coding problem examples that help answer the problem, I don't want the answer to the problem: "
+  }
+}

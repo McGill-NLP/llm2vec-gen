@@ -108,7 +108,7 @@ class LLM2VecGenModel:
                 output_ids, skip_special_tokens=False, max_new_tokens=max_new_tokens
             )
             if get_embeddings:
-                return output_text[0], hidden_states
+                return output_text[0], hidden_states.mean(dim=1)
             return output_text[0]
 
 

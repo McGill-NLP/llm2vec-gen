@@ -1,0 +1,8 @@
+{
+  "instructions": {
+    "query": "Given a {task} question, generate relevant passages that help answer the question, I don't want the answer to the problem: "
+  },
+  "instructions_long": {
+    "query": "Given a {task} question, generate relevant documents that help answer the question, I don't want the answer to the problem: "
+  }
+}
