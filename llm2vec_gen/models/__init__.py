@@ -53,7 +53,7 @@ class LLM2VecGenModel:
             return input_ids
 
         @torch.no_grad()
-        def encode(self, texts, max_length=512):
+        def encode(self, texts, max_length=512, get_recon_hidden_states=False):
             special_tokens = self.tokenizer.additional_special_tokens
             if isinstance(texts, str):
                 texts = [texts]
@@ -80,14 +80,24 @@ class LLM2VecGenModel:
             input_ids = input_ids.to(self.device)
             attention_mask = attention_mask.to(self.device)
             
+            if get_recon_hidden_states:
+                h, _, dec = self.model.encode(
+                    query_input_ids=input_ids,
+                    query_attention_mask=attention_mask,
+                    return_decoder_inputs=get_recon_hidden_states,
+                )
+                return h.mean(dim=1), dec
+
             h, _ = self.model.encode(
                 query_input_ids=input_ids,
                 query_attention_mask=attention_mask,
+                return_decoder_inputs=get_recon_hidden_states,
             )
             return h.mean(dim=1)  # [batch, hidden]
 
         @torch.no_grad()
-        def generate(self, input_text, max_new_tokens=1000, get_embeddings=False):
+        def generate(self, input_text, max_new_tokens=1000, get_align_hidden_states=False):
+            assert isinstance(input_text, str), "input_text must be a string"
             special_tokens = self.tokenizer.additional_special_tokens
             input_text_with_special_tokens = input_text.strip() + "".join(
                 special_tokens
@@ -98,16 +108,16 @@ class LLM2VecGenModel:
             output_ids = self.model.generate(
                 **input_ids,
                 max_new_tokens=max_new_tokens,
-                return_embeddings=get_embeddings,
+                return_embeddings=get_align_hidden_states,
             )
             hidden_states = None
-            if get_embeddings:
+            if get_align_hidden_states:
                 output_ids, hidden_states, hidden_states_attention_mask = output_ids
 
             output_text = self.tokenizer.batch_decode(
-                output_ids, skip_special_tokens=False, max_new_tokens=max_new_tokens
+                output_ids, skip_special_tokens=True, max_length=max_new_tokens
             )
-            if get_embeddings:
+            if get_align_hidden_states:
                 return output_text[0], hidden_states.mean(dim=1)
             return output_text[0]
 
