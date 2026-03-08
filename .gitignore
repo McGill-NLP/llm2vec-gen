@@ -1,0 +1,6 @@
+outputs/**
+.vscode/**
+**/__pycache__/**
+temp_data/**
+wandb/**
+**/bright_eval/cache/**
