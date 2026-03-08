@@ -80,7 +80,7 @@ python scripts/train.py \
 | `special_tokens=total_20`, `total_10`, … | Special token set (see `conf/special_tokens/`) |
 | `run.wandb_run_id=...` | Run name used for logging and saving |
 
-Outputs are written under `outputs/`.
+Outputs are written under `outputs/`. The WandB logs and exact evaluation results of the paper's models can be accessed in [this project](https://wandb.ai/siva-reddy-mila-org/llm2vec-gen).
 
 
 ## 💬 Response Generation
