@@ -1,7 +1,7 @@
 # *LLM2VEC-GEN: Generative Embeddings from Large Language Models* 
 
 [![arxiv](https://img.shields.io/badge/arXiv-XXX-b31b1b.svg)](https://arxiv.org/abs/XXX)
-[![PyPi](https://img.shields.io/pypi/v/llm2vec_gen)](https://pypi.org/project/llm2vec-gen/)
+[![PyPI](https://img.shields.io/pypi/v/llm2vec-gen?label=PyPI)](https://pypi.org/project/llm2vec-gen/)
 [![HF Link](https://img.shields.io/badge/HF%20Models-LLM2Vec--Gen-FFD21E.svg)](https://huggingface.co/collections/McGill-NLP/llm2vec-gen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/McGill-NLP/llm2vec-gen/blob/main/LICENSE)
 [![WandB](https://img.shields.io/badge/WandB-Logs-yellow.svg)](https://wandb.ai/siva-reddy-mila-org/llm2vec-gen)
@@ -9,7 +9,7 @@
 LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query. This repository supports codes for training and evaluation on MTEB, AdvBench-IR, BRIGHT, plus analysis scripts (logit lens, latent lens, and generations).
 
 <p align="center">
-  <img src="https://github.com/McGill-NLP/llm2vec-gen/blob/main/assets/llm2vecgen_main_figure.png" width="80%" alt="llm2vecgen_main_figure"/>
+  <img src="https://github.com/McGill-NLP/llm2vec-gen/blob/main/assets/llm2vecgen_main_figure.png" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
 ## Table of Contents
@@ -205,7 +205,7 @@ llm2vec-gen/
 If you use this code, models, or data, please cite the LLM2Vec-Gen paper.
 
 ```
-@article{behnamghader2026llm2vec-gen,
+@article{behnamghader2026llm2vecgen,
   title={LLM2Vec-Gen: Generative Embeddings from Large Language Models},
   author={BehnamGhader, Parishad and Adlakha, Vaibhav and Schmidt, Fabian David and Chapados, Nicolas and Mosbach, Marius and Reddy, Siva},
   journal={arXiv preprint},
