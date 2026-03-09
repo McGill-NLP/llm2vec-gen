@@ -4,3 +4,6 @@ outputs/**
 temp_data/**
 wandb/**
 **/bright_eval/cache/**
+.conda/**
+env.txt
+dist/**
