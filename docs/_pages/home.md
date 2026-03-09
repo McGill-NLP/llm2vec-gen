@@ -25,5 +25,5 @@ excerpt: Parishad BehnamGhader, Vaibhav Adlakha, Fabian David Schmidt, Nicolas C
 LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0707ed18-96a7-40de-b622-2e0c8bd26cbd" width="80%" alt="llm2vecgen_main_figure"/>
+  <img src="https://github.com/user-attachments/assets/0707ed18-96a7-40de-b622-2e0c8bd26cbd" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
