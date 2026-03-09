@@ -110,7 +110,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str, default="meta-llama/Llama-3.2-3B-Instruct")
     parser.add_argument("--dataset_name", type=str, default="tulu")
-    parser.add_argument("--dataset_path", type=str, default="vaibhavad/tulu-3-sft-mixture")  # or "vaibhavad/tulu-3-sft-mixture-hard-negative"
+    parser.add_argument("--dataset_path", type=str, default="mcgill-nlp/llm2vec-gen-tulu")
     parser.add_argument("--max_new_tokens", type=int, default=500)
     parser.add_argument("--max_length", type=int, default=1024)
     parser.add_argument("--batch_size", type=int, default=1)

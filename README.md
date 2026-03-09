@@ -53,6 +53,12 @@ emb = model.encode("Is Montreal located in Canada?")
 # Generate text from Embeddings (encoder + decoder)
 answer, enc_before_answer = model.generate("Is Montreal located in Canada?", max_new_tokens=100)
 ```
+This code snippet will return the answer of the LLM2Vec-Gen model generated from the generative embeddings of the input. You can access the embeddings either from the `.encode()` function or from the `.generate()` function. 
+
+> Yes, Montreal is a city in Canada. It is the second-largest city in the country, located in the province of Quebec. Montreal is known for its rich cultural heritage, historic architecture, and vibrant arts scene.<|end_of_text|>
+>
+> True tensor([[-0.2393,  0.0280, -0.5078,  ...,  0.1270,  0.6484,  0.3574]], device='cuda:0', dtype=torch.bfloat16)
+
 
 
 ## 🏋️ Training
@@ -80,7 +86,7 @@ python scripts/train.py \
 | `special_tokens=total_20`, `total_10`, … | Special token set (see `conf/special_tokens/`) |
 | `run.wandb_run_id=...` | Run name used for logging and saving |
 
-Outputs are written under `outputs/`. The WandB logs and exact evaluation results of the paper's models can be accessed in [this project](https://wandb.ai/siva-reddy-mila-org/llm2vec-gen).
+Outputs are written under `outputs/`. You may find all scripts used for training the models in the paper in `train_scripts/` directory. Make sure to identify the correct cuda visible devices in each run. WandB logs are accessible from [this WandB project](https://wandb.ai/siva-reddy-mila-org/llm2vec-gen).
 
 
 ## 💬 Response Generation
@@ -188,6 +194,7 @@ llm2vec-gen/
 │   ├── models/              # LLM2VecGenModel, encoder-decoder, etc.
 │   ├── dataset/             # Data loading and collation
 │   └─ trainer/              # Custom trainer
+├── train_scripts/           # Different training bash scripts used to train main models and ablations of the paper
 └── scripts/
     ├── train.py            
     ├── response_generation.py
