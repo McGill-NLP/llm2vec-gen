@@ -8,22 +8,22 @@ header:
           url: https://arxiv.org
           icon: "fas fa-book"
         - label: "Code"
-          url: "https://github.com/"
+          url: "https://github.com/McGill-NLP/llm2vec-gen/"
           icon: "fab fa-github"
-        - label: "Demo"
-          url: "https://example.com"
-          icon: "fas fa-laptop"
-        - label: "Tweets"
-          url: "https://twitter.com/"
-          icon: "fab fa-twitter"
-        - label: "Video"
-          url: "https://youtube.com"
-          icon: "fas fa-video"
+        - label: "Models & Data"
+          url: "https://huggingface.co/collections/McGill-NLP/llm2vec-gen"
+          icon: "fas fa-robot"
+        - label: "WandB Logs"
+          url: "https://wandb.ai/siva-reddy-mila-org/llm2vec-gen"
+          icon: "fas fa-chart-bar"
+        
 
-title: "My project name"
-excerpt: Firstname Lastname, Firstname Lastname, Firstname Lastname, Firstname Lastname, Firstname Lastname
+title: "LLM2Vec-Gen: Generative Embeddings from Large Language Models"
+excerpt: Parishad BehnamGhader, Vaibhav Adlakha, Fabian David Schmidt, Nicolas Chapados, Marius Mosbach, and Siva Reddy
 ---
 
-## About this project
+LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query.
 
-Here, you can write a short description of your project.
+<p align="center">
+  <img src="https://github.com/McGill-NLP/llm2vec-gen/blob/main/assets/llm2vecgen_main_figure.png" width="80%" alt="llm2vecgen_main_figure"/>
+</p>
