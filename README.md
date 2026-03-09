@@ -24,19 +24,12 @@ LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encod
 
 
 ## 📦 Installation
-**ToDo**
 Either use Pypi or clone the repository and install in editable mode:
 
 ```bash
 pip install llm2vec-gen  # or pip install -e .
-pip install flash-attn --no-build-isolation
 ```
 
-**Requirements:** Python 3.10+, PyTorch, Transformers, Datasets, Hydra, PEFT, and (for evaluation) MTEB. Install any missing dependencies, for example:
-
-```bash
-pip install torch transformers datasets hydra-core omegaconf peft mteb tqdm
-```
 
 ## 🚀 Quick Start
 
@@ -211,4 +204,11 @@ llm2vec-gen/
 
 If you use this code, models, or data, please cite the LLM2Vec-Gen paper.
 
-**ToDo**
+```
+@article{behnamghader2026llm2vec-gen,
+  title={LLM2Vec-Gen: Generative Embeddings from Large Language Models},
+  author={BehnamGhader, Parishad and Adlakha, Vaibhav and Schmidt, Fabian David and Chapados, Nicolas and Mosbach, Marius and Reddy, Siva},
+  journal={arXiv preprint},
+  year={2026}
+}
+```

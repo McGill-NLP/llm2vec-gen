@@ -7,4 +7,9 @@ wandb/**
 .conda/**
 env.txt
 dist/**
+
 help.txt
+pyproject.toml
+
+HF_README.md
+PyPI_README.md
