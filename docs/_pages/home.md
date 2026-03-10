@@ -45,6 +45,6 @@ answer, enc_before_answer = model.generate("Is Montreal located in Canada?", max
 ```
 This code snippet will return the answer of the LLM2Vec-Gen model generated from the generative embeddings of the input. You can access the embeddings either from the `.encode()` function or from the `.generate()` function. 
 
-> Yes, Montreal is a city in Canada. It is the second-largest city in the country, located in the province of Quebec. Montreal is known for its rich cultural heritage, historic architecture, and vibrant arts scene.<|end_of_text|>
+> Yes, Montreal is a city in Canada. It is the second-largest city in the country, located in the province of Quebec. Montreal is known for its rich cultural heritage, historic architecture, and vibrant arts scene.
 >
 > True tensor([[-0.2393,  0.0280, -0.5078,  ...,  0.1270,  0.6484,  0.3574]], device='cuda:0', dtype=torch.bfloat16)
