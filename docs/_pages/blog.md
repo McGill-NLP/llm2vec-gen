@@ -65,6 +65,20 @@ A critical design choice: **the LLM backbone is completely frozen throughout tra
 
 We evaluated LLM2Vec-Gen across three model families (Llama-3.x, Qwen-2.5, Qwen-3) at scales from 0.5B to 8B parameters.
 
+## Connection to JEPA: Predicting in Representation Space
+
+If the "predict the response embedding instead of generating the response" idea feels familiar, it should. LLM2Vec-Gen shares a deep conceptual connection with Yann LeCun's **Joint Embedding Predictive Architecture (JEPA)**, first proposed in his 2022 position paper *"A Path Towards Autonomous Machine Intelligence."*
+
+The core principle of JEPA is simple but powerful: instead of predicting raw data (pixels, tokens), predict *representations* of that data in an abstract embedding space. By operating in representation space, JEPA models can focus on high-level semantic content and discard unpredictable low-level details like textures or stylistic variations. This is also what makes JEPA models self-supervised and highly efficient: they learn from unlabeled data by predicting abstract representations rather than every surface-level detail.
+
+LLM2Vec-Gen applies this same principle to text. Our alignment objective trains the compression tokens to predict the *embedding* of the LLM's response (as produced by a teacher encoder), instead of directly training to generate response token-by-token. The query is the context; the response embedding is the prediction target; and the compression tokens act as the predictor — mapping from observed input to an abstract representation of the output.
+
+We think this positions LLM2Vec-Gen as evidence that **the JEPA principle — predict representations, not raw data — extends naturally from vision to NLP embedding tasks.**
+
+## Results: State-of-the-Art Self-Supervised Embeddings
+
+We evaluated LLM2Vec-Gen across three model families (Llama-3.x, Qwen-2.5, Qwen-3) at scales from 0.5B to 8B parameters.
+
 ### MTEB Performance
 
 On the Massive Text Embedding Benchmark (MTEB v2, 41 tasks), LLM2Vec-Gen achieves **state-of-the-art self-supervised performance**. The best model (Qwen-3-8B) scores 62.1, improving 9.3% over the unsupervised LLM2Vec teacher it distills from. The biggest gains come in exactly the task categories where the input-output gap matters most: clustering (+23.9%), classification (+9.2%), and semantic textual similarity (+10.5%).
@@ -123,4 +137,4 @@ We think this opens up an interesting direction for embedding research — one w
 
 ---
 
-*LLM2Vec-Gen is under review. You can access code and models through [LLM2Vec-Gen GitHub repository](https://github.com/McGill-NLP/llm2vec-gen).*
+*You can access code and models through [LLM2Vec-Gen GitHub repository](https://github.com/McGill-NLP/llm2vec-gen).*
