@@ -34,19 +34,152 @@ pip install llm2vec-gen  # or pip install -e .
 
 ## 🚀 Quick Start
 
-Load a pretrained model and use it as an encoder or for generation:
-
+Load a pretrained model:
 ```python
+import torch
 from llm2vec_gen import LLM2VecGenModel
 
 model = LLM2VecGenModel.from_pretrained("McGill-NLP/LLM2Vec-Gen-Qwen3-8B")
+```
 
-_, recon_hidden_states = model.encode("Is Montreal located in Canada?", get_recon_hidden_states=True)
+As an example, you can use the model for **retrieval** using the following code snippet:
+```python
+q_instruction = "Generate a passage that best answers this question: "
+d_instruction = "Summarize the following passage: "
+
+queries = [
+  "where do polar bears live and what's their habitat",
+  "what does disk cleanup mean on a computer"
+]
+q_reps = model.encode([q_instruction + q for q in queries])
+
+documents = [
+  "Polar bears live throughout the circumpolar North in the Arctic, spanning across Canada, Alaska (USA), Russia, Greenland, and Norway. Their primary habitat is sea ice over the continental shelf, which they use for hunting, mating, and traveling. They are marine mammals that rely on this environment to hunt seals.",
+  "Disk Cleanup is a built-in Windows tool that frees up hard drive space by scanning for and deleting unnecessary files like temporary files, cached data, Windows updates, and items in the Recycle Bin. It improves computer performance by removing \"junk\" files, which can prevent the system from running slowly due to low storage.",
+]
+d_reps = model.encode([d_instruction + d for d in documents])
+
+# Compute cosine similarity
+q_reps_norm = torch.nn.functional.normalize(q_reps, p=2, dim=1)
+d_reps_norm = torch.nn.functional.normalize(d_reps, p=2, dim=1)
+cos_sim = torch.mm(q_reps_norm, d_reps_norm.transpose(0, 1))
+
+print(cos_sim)
+"""
+tensor([[0.8750, 0.1182],
+        [0.0811, 0.9336]])
+"""
+```
+
+Other examples to try LLM2Vec-Gen in other tasks:
+<details>
+<summary> <strong>Sentence Similarity </strong> </summary>
+
+```python
+instruction = "Generate text that is semantically similar to this text: "
+
+queries = [
+  "The traveler was frustrated because the flight had been delayed for several hours.",
+  "Stars rotate due to the angular momentum of the gas they formed from."
+]
+q_reps = model.encode([instruction + q for q in queries])
+
+pairs = [
+  "A multi-hour wait at the airport left the passenger feeling quite annoyed.",
+  "The rotational motion of a stellar body is a direct consequence of the conservation of angular momentum from its original protostellar cloud.",
+]
+p_reps = model.encode([instruction + p for p in pairs])
+
+# Compute cosine similarity
+q_reps_norm = torch.nn.functional.normalize(q_reps, p=2, dim=1)
+p_reps_norm = torch.nn.functional.normalize(p_reps, p=2, dim=1)
+cos_sim = torch.mm(q_reps_norm, p_reps_norm.transpose(0, 1))
+
+print(cos_sim)
+"""
+tensor([[0.8008, 0.2539],
+        [0.2061, 0.8906]])
+"""
+```
+</details>
+<details>
+<summary> <strong>Classification </strong> </summary>
+
+```python
+q_instruction = "Classify the emotion expressed in the given text into anger and joy: "
+p_instruction = "Summarize this text: "
+
+queries = [
+  "I just feel irritated right now",
+  "I'm feeling really thrilled and excited",
+]
+q_reps = model.encode([q_instruction + q for q in queries])
+
+pairs = [
+  "This text is classified as \"angry\".",
+  "This text is classified as \"joy\".",
+]
+p_reps = model.encode([p_instruction + p for p in pairs])
+
+# Compute cosine similarity
+q_reps_norm = torch.nn.functional.normalize(q_reps, p=2, dim=1)
+p_reps_norm = torch.nn.functional.normalize(p_reps, p=2, dim=1)
+cos_sim = torch.mm(q_reps_norm, p_reps_norm.transpose(0, 1))
+
+print(cos_sim)
+"""
+tensor([[0.8008, 0.6953],
+        [0.7070, 0.8008]])
+"""
+```
+</details>
+<details>
+<summary> <strong>Clustering </strong> </summary>
+
+```python
+from sklearn.cluster import KMeans
+
+instruction = "Cluster the following Amazon review: "
+
+sentences = [
+  "This product is amazing and I love it",
+  "Fantastic experience, highly recommend",
+  "Terrible quality, total waste of money",
+  "Awful product, very disappointed",
+]
+
+reps = model.encode([instruction + s for s in sentences])
+reps = reps.float().cpu().numpy()
+
+labels = KMeans(n_clusters=2, random_state=0).fit_predict(reps)
+
+for s, l in zip(sentences, labels):
+  print(f"[{l}] {s}")
+
+"""
+[1] This product is amazing and I love it
+[1] Fantastic experience, highly recommend
+[0] Terrible quality, total waste of money
+[0] Awful product, very disappointed
+"""
+```
+</details>
+
+
+<br>
+
+LLM2Vec-Gen provides interpretable embeddings. You can use the following code to **decode the content** embedded in the embeddings:
+
+```python
+_, recon_hidden_states = model.encode("what does disk cleanup mean on a computer", get_recon_hidden_states=True)
 # recon_hidden_states: torch.Tensor with shape (1, compression token size, hidden_dim)
 
-answer = model.generate(recon_hidden_states=recon_hidden_states, max_new_tokens=100)
-answer
->>> 'Yes, Montreal is located in Canada. It is the second-largest city in the country, after Toronto, and is the largest city in the province of Quebec. Montreal is known for its rich cultural heritage, historic architecture, and vibrant arts scene.<|end_of_text|>'
+answer = model.generate(recon_hidden_states=recon_hidden_states, max_new_tokens=55)
+
+print(answer)
+"""
+* **\n\n**Disk Cleanup** is a built-in utility in Windows that helps you **free up disk space** by **removing unnecessary files** from your computer. It is designed to clean up temporary files, system cache, and other files that are no longer needed.\n\n
+"""
 ```
 This code snippet will return the answer of the LLM2Vec-Gen model generated from the generative embeddings of the input (`recon_hidden_states`).
 
