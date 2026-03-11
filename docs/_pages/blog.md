@@ -61,10 +61,6 @@ A critical design choice: **the LLM backbone is completely frozen throughout tra
 - Training an 8B model takes about 3.5 hours on 2 H100 GPUs.
 - At inference time, you just append the special tokens and do a single forward pass. No generation needed.
 
-## Results: State-of-the-Art Self-Supervised Embeddings
-
-We evaluated LLM2Vec-Gen across three model families (Llama-3.x, Qwen-2.5, Qwen-3) at scales from 0.5B to 8B parameters.
-
 ## Connection to JEPA: Predicting in Representation Space
 
 If the "predict the response embedding instead of generating the response" idea feels familiar, it should. LLM2Vec-Gen shares a deep conceptual connection with Yann LeCun's **Joint Embedding Predictive Architecture (JEPA)**, first proposed in his 2022 position paper *"A Path Towards Autonomous Machine Intelligence."*
