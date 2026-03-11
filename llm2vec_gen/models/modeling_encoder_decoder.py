@@ -504,6 +504,7 @@ class EncoderDecoderModel(torch.nn.Module):
         query_input_ids,
         query_attention_mask,
         return_decoder_inputs=False,
+        decoder_inputs_embeds: Optional[torch.Tensor] = None,
     ):
 
         def _encode(
@@ -533,11 +534,13 @@ class EncoderDecoderModel(torch.nn.Module):
 
             return hidden_states, hidden_states_attention_mask
     
-        decoder_input_hidden_states, hidden_states_attention_mask = _encode(query_input_ids, query_attention_mask)
-
-        if self.reconstruction_mlp is not None:
-            decoder_input_hidden_states = self.reconstruction_mlp(decoder_input_hidden_states)
-
+        if decoder_inputs_embeds is None:
+            decoder_input_hidden_states, hidden_states_attention_mask = _encode(query_input_ids, query_attention_mask)
+            if self.reconstruction_mlp is not None:
+                decoder_input_hidden_states = self.reconstruction_mlp(decoder_input_hidden_states)
+        else:
+            decoder_input_hidden_states = decoder_inputs_embeds
+            hidden_states_attention_mask = None
         encoder_hidden_states = decoder_input_hidden_states
         if self.alignment_mlp is not None:
             encoder_hidden_states = self.alignment_mlp(
@@ -555,15 +558,17 @@ class EncoderDecoderModel(torch.nn.Module):
         attention_mask: torch.Tensor,
         max_new_tokens: int = 20,
         return_embeddings: bool = False,
+        decoder_inputs_embeds: Optional[torch.Tensor] = None,
     ):
         encoder_hidden_states, hidden_states_attention_mask, decoder_inputs_embeds = (
             self.encode(
                 query_input_ids=input_ids,
                 query_attention_mask=attention_mask,
                 return_decoder_inputs=True,
+                decoder_inputs_embeds=decoder_inputs_embeds,
             )
         )
-        
+
         decoded_ids = torch.tensor([], device=input_ids.device, dtype=torch.long)
         decoder_attention_mask = torch.ones(decoder_inputs_embeds.shape[0], decoder_inputs_embeds.shape[1], dtype=torch.long, device=decoder_inputs_embeds.device)
 

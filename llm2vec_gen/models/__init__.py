@@ -4,7 +4,7 @@ This module contains model implementations and related utilities.
 """
 
 # Import key classes/functions to expose at package level
-from typing import List, Optional, cast
+from typing import List, Optional, cast, Union
 
 from peft import LoraConfig, PeftModel, get_peft_model
 import torch
@@ -53,7 +53,7 @@ class LLM2VecGenModel:
             return input_ids
 
         @torch.no_grad()
-        def encode(self, texts, max_length=512, get_recon_hidden_states=False):
+        def encode(self, texts: Union[str, List[str]], max_length: int=512, get_recon_hidden_states: bool=False):
             special_tokens = self.tokenizer.additional_special_tokens
             if isinstance(texts, str):
                 texts = [texts]
@@ -96,8 +96,11 @@ class LLM2VecGenModel:
             return h.mean(dim=1)  # [batch, hidden]
 
         @torch.no_grad()
-        def generate(self, input_text, max_new_tokens=1000, get_align_hidden_states=False):
+        def generate(self, input_text: str="", input_ids: Optional[torch.LongTensor]=None, max_new_tokens: int=1000, get_align_hidden_states: bool=False, recon_hidden_states: Optional[torch.Tensor]=None):
             assert isinstance(input_text, str), "input_text must be a string"
+            if len(recon_hidden_states.shape) == 2:
+                recon_hidden_states = recon_hidden_states.unsqueeze(0)
+            assert len(recon_hidden_states.shape) == 3 and recon_hidden_states.shape[0] == 1, "recon_hidden_states must have shape [1, compression token size, hidden size]"
             special_tokens = self.tokenizer.additional_special_tokens
             input_text_with_special_tokens = input_text.strip() + "".join(
                 special_tokens
@@ -108,6 +111,7 @@ class LLM2VecGenModel:
             output_ids = self.model.generate(
                 **input_ids,
                 max_new_tokens=max_new_tokens,
+                decoder_inputs_embeds=recon_hidden_states,
                 return_embeddings=get_align_hidden_states,
             )
             hidden_states = None
