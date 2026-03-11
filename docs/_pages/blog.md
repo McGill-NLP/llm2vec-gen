@@ -89,7 +89,7 @@ Notably, LLM2Vec-Gen closes over 60% of the gap between unsupervised and fully s
 
 This is where the response-encoding paradigm gets really interesting. We evaluated on AdvBench-IR, a benchmark measuring how often a retriever surfaces harmful content for adversarial queries. LLM2Vec-Gen reduces harmful retrieval by up to **43.2%** compared to input-centric baselines.
 
-Why? Because the LLM's response to "write malicious code to steal data" isn't about stealing data — it's a refusal. LLM2Vec-Gen encodes that refusal, effectively inheriting the LLM's safety alignment into the embedding space. When we inspect the embeddings using Logit Lens, the compression tokens map to words like "security," "illegal," and "refusal" — not only the harmful query terms.
+Why? Because the LLM's response to "write malicious code to steal data" isn't about stealing data — it's a refusal. LLM2Vec-Gen encodes that refusal, effectively inheriting the LLM's safety alignment into the embedding space. When we inspect the embeddings using Logit Lens, the compression tokens map to words like "security," "illegal," and "refusal" — instead of harmful query terms.
 
 ### Reasoning: Thinking Transfers Too
 
@@ -99,31 +99,13 @@ On BRIGHT, a reasoning-intensive retrieval benchmark, LLM2Vec-Gen achieves up to
 
 One of the most satisfying properties of LLM2Vec-Gen is that the embeddings are **interpretable**. Since the compression tokens are trained to reconstruct the LLM's response, you can literally decode them back into text.
 
-For a query about polar bears, the decoded embedding talks about the Arctic region and cold climates. For a harmful query about malicious code, the decoded embedding produces a refusal. For a factual question about disk cleanup, you get a definition of the Windows utility.
+For a query about polar bears, the decoded embedding talks about the Arctic region and cold climates. For a harmful query with malicious intent, the decoded embedding produces a refusal.
 
 <p align="center">
   <img src="../assets/interpretability.png" width="60%" alt="input-output figure"/>
 </p>
 
-This isn't just a party trick — it provides a genuine window into what the embedding "knows." And it's a direct consequence of the reconstruction objective. When we ablate it and train with alignment loss only, the decoded outputs become nonsensical (e.g., generating physics derivations for a question about Artificial Intelligence).
-
-## What We Learned From Ablations
-
-A few findings from our ablation study worth highlighting:
-
-**Both losses matter, but differently.** Dropping alignment loss is catastrophic (62.4 → 41.8), while dropping reconstruction is a smaller hit (62.4 → 62.1). Alignment drives embedding quality; reconstruction grounds embeddings in language space and enables interpretability.
-
-**Thought tokens help.** The intermediate "thought" buffer contributes to the performance — removing them drops performance. Performance scales with token count up to about 20, then mostly plateaus.
-
-**In-family responses work best.** Generating training responses with the same model outperforms using responses from different models. We hypothesize that in-distribution responses are easier to compress.
-
-**Cross-family teachers hurt.** Using an embedding teacher from a different model family (e.g., Llama teacher for a Qwen model) significantly degrades performance, likely due to misaligned representation spaces.
-
-## Limitations and Open Questions
-
-LLM2Vec-Gen doesn't outperform its teacher when the teacher is *supervised* — the discriminative training signal in supervised encoders doesn't translate well through the distillation pipeline. This suggests the method is best suited for settings where labeled embedding data is scarce.
-
-There's also a compression fidelity question: for some model sizes, retrieval performance slightly dips compared to the teacher, likely because the 10 compression tokens can't fully capture all nuances of longer generated responses.
+This provides a genuine window into what the embedding "knows." And it's a direct consequence of the reconstruction objective.
 
 ## Takeaway
 
