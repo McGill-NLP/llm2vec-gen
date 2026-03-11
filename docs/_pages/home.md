@@ -22,10 +22,10 @@ title: "LLM2Vec-Gen: Generative Embeddings from Large Language Models"
 excerpt: Parishad BehnamGhader, Vaibhav Adlakha, Fabian David Schmidt, Nicolas Chapados, Marius Mosbach, and Siva Reddy
 ---
 
-LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query.
+LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query itself.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0707ed18-96a7-40de-b622-2e0c8bd26cbd" width="95%" alt="llm2vecgen_main_figure"/>
+  <img src="../../assets/llm2vecgen.gif" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
 
