@@ -7,6 +7,9 @@ header:
         - label: "Paper"
           url: https://arxiv.org
           icon: "fas fa-book"
+        - label: "Blog"
+          url: "https://mcgill-nlp.github.io/llm2vec-gen/blog/"
+          icon: "fas fa-newspaper"
         - label: "Code"
           url: "https://github.com/McGill-NLP/llm2vec-gen/"
           icon: "fab fa-github"
