@@ -41,18 +41,14 @@ from llm2vec_gen import LLM2VecGenModel
 
 model = LLM2VecGenModel.from_pretrained("McGill-NLP/LLM2Vec-Gen-Qwen3-8B")
 
-# Encode text
-emb = model.encode("Is Montreal located in Canada?")
+_, recon_hidden_states = model.encode("Is Montreal located in Canada?", get_recon_hidden_states=True)
+# recon_hidden_states: torch.Tensor with shape (1, compression token size, hidden_dim)
 
-# Generate text from Embeddings (encoder + decoder)
-answer, enc_before_answer = model.generate("Is Montreal located in Canada?", max_new_tokens=100)
+answer = model.generate(recon_hidden_states=recon_hidden_states, max_new_tokens=100)
+answer
+>>> 'Yes, Montreal is located in Canada. It is the second-largest city in the country, after Toronto, and is the largest city in the province of Quebec. Montreal is known for its rich cultural heritage, historic architecture, and vibrant arts scene.<|end_of_text|>'
 ```
-This code snippet will return the answer of the LLM2Vec-Gen model generated from the generative embeddings of the input. You can access the embeddings either from the `.encode()` function or from the `.generate()` function. 
-
-> Yes, Montreal is a city in Canada. It is the second-largest city in the country, located in the province of Quebec. Montreal is known for its rich cultural heritage, historic architecture, and vibrant arts scene.<|end_of_text|>
->
-> True tensor([[-0.2393,  0.0280, -0.5078,  ...,  0.1270,  0.6484,  0.3574]], device='cuda:0', dtype=torch.bfloat16)
-
+This code snippet will return the answer of the LLM2Vec-Gen model generated from the generative embeddings of the input (`recon_hidden_states`).
 
 
 ## 🏋️ Training
