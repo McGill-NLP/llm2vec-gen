@@ -1,9 +1,7 @@
 ---
-title: "Blog"
+title: "What If Embedding Models Encoded the Answer, Not the Question?"
 permalink: /blog/
 ---
-
-# What If Embedding Models Encoded the Answer, Not the Question?
 
 *Introducing LLM2Vec-Gen: a new paradigm for text embeddings that represents what an LLM **would say**, rather than what it was **asked**.*
 
@@ -16,7 +14,7 @@ Text embeddings power a huge chunk of modern NLP — semantic search, retrieval-
 But there's a subtle tension baked into this paradigm that rarely gets discussed. Embedding models are *input-centric* — they encode what you give them. The trouble is, embedding tasks often require mapping **diverse inputs to similar outputs**. Think about clustering: two news articles about the same event, written from completely different angles, should land near each other in embedding space. Or classification: "I just feel really violent right now" and "I'm feeling really out of place and irritated" are lexically distinct, but both express anger.
 
 <p align="center">
-  <img src="../../assets/introduction.png" width="80%" alt="input-output figure"/>
+  <img src="./assets/introduction.png" width="80%" alt="input-output figure"/>
 </p>
 
 Input-centric encoders struggle here because they faithfully represent the surface form and semantics of the input. Bridging this gap — from varied inputs to shared meaning — typically requires massive amounts of labeled contrastive data.
@@ -36,7 +34,7 @@ The catch? Actually generating responses at inference time is expensive. HyDE (G
 LLM2Vec-Gen solves this by **learning to predict what the LLM would say, without actually generating it.** Here's how it works.
 
 <p align="center">
-  <img src="../../assets/llm2vecgen.gif" width="95%" alt="llm2vecgen_main_figure"/>
+  <img src="./assets/llm2vecgen.gif" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
 ### Special Tokens as Response Placeholders
@@ -74,7 +72,7 @@ On the Massive Text Embedding Benchmark (MTEB v2, 41 tasks), LLM2Vec-Gen achieve
 Notably, LLM2Vec-Gen closes over 60% of the gap between unsupervised and fully supervised methods — without using any labeled data.
 
 <p align="center">
-  <img src="../../assets/model_size_vs_performance.png" width="90%" alt="input-output figure"/>
+  <img src="./assets/model_size_vs_performance.png" width="90%" alt="input-output figure"/>
 </p>
 
 ### Safety: Embeddings That Refuse
@@ -94,7 +92,7 @@ One of the most satisfying properties of LLM2Vec-Gen is that the embeddings are 
 For a query about polar bears, the decoded embedding talks about the Arctic region and cold climates. For a harmful query about malicious code, the decoded embedding produces a refusal. For a factual question about disk cleanup, you get a definition of the Windows utility.
 
 <p align="center">
-  <img src="../../assets/interpretability.png" width="80%" alt="input-output figure"/>
+  <img src="./assets/interpretability.png" width="80%" alt="input-output figure"/>
 </p>
 
 This isn't just a party trick — it provides a genuine window into what the embedding "knows." And it's a direct consequence of the reconstruction objective. When we ablate it and train with alignment loss only, the decoded outputs become nonsensical (e.g., generating physics derivations for a question about Artificial Intelligence).
