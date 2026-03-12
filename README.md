@@ -1,6 +1,6 @@
 # *LLM2VEC-GEN: Generative Embeddings from Large Language Models* 
 
-[![arxiv](https://img.shields.io/badge/arXiv-XXX-b31b1b.svg)](https://arxiv.org/abs/XXX)
+[![arxiv](https://img.shields.io/badge/arXiv-2603.10913-b31b1b.svg)](https://arxiv.org/abs/2603.10913)
 [![PyPI](https://img.shields.io/pypi/v/llm2vec-gen?label=PyPI)](https://pypi.org/project/llm2vec-gen/)
 [![HF Link](https://img.shields.io/badge/HF%20Models-LLM2Vec--Gen-FFD21E.svg)](https://huggingface.co/collections/McGill-NLP/llm2vec-gen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/McGill-NLP/llm2vec-gen/blob/main/LICENSE)
@@ -340,7 +340,8 @@ If you use this code, models, or data, please cite the LLM2Vec-Gen paper.
 @article{behnamghader2026llm2vecgen,
   title={LLM2Vec-Gen: Generative Embeddings from Large Language Models},
   author={BehnamGhader, Parishad and Adlakha, Vaibhav and Schmidt, Fabian David and Chapados, Nicolas and Mosbach, Marius and Reddy, Siva},
-  journal={arXiv preprint},
-  year={2026}
+  journal={arXiv preprint: arXiv:2603.10913},
+  year={2026},
+  url={https://arxiv.org/abs/2603.10913}
 }
 ```
