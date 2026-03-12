@@ -54,6 +54,23 @@ class LLM2VecGenModel:
 
         @torch.no_grad()
         def encode(self, texts: Union[str, List[str]], max_length: int=512, get_recon_hidden_states: bool=False):
+            """
+            Inputs:
+              - texts (str | List[str]): Input text(s). Special tokens from
+                `tokenizer.additional_special_tokens` are appended internally.
+              - max_length (int): Max token length for tokenization (padding+truncation).
+              - get_recon_hidden_states (bool): If True, also return decoder inputs
+                ("reconstruction hidden states") which can be used for `generate(...)`.
+
+            Outputs:
+              - if get_recon_hidden_states=False:
+                  embeddings (torch.Tensor): [batch_size, hidden_dim]
+              - if get_recon_hidden_states=True:
+                  (embeddings, recon_hidden_states)
+                    - embeddings (torch.Tensor): [batch_size, hidden_dim]
+                    - recon_hidden_states (torch.Tensor): typically
+                      [batch_size, compression_token_count, hidden_dim]
+            """
             special_tokens = self.tokenizer.additional_special_tokens
             if isinstance(texts, str):
                 texts = [texts]
@@ -96,7 +113,28 @@ class LLM2VecGenModel:
             return h.mean(dim=1)  # [batch, hidden]
 
         @torch.no_grad()
-        def generate(self, input_text: str="", input_ids: Optional[torch.LongTensor]=None, max_new_tokens: int=1000, get_align_hidden_states: bool=False, recon_hidden_states: Optional[torch.Tensor]=None):
+        def generate(self, input_text: str="", max_new_tokens: int=256, get_align_hidden_states: bool=False, recon_hidden_states: Optional[torch.Tensor]=None):
+            """
+            Inputs:
+              - input_text (str): Optional input text. Special tokens from
+                `tokenizer.additional_special_tokens` are appended internally.
+                If recon_hidden_states is not provided, this input text is used to 
+                generate the response.
+              - max_new_tokens (int): Maximum number of new tokens to generate.
+              - get_align_hidden_states (bool): If True, also return the final embedding
+                of the input text.
+              - recon_hidden_states (torch.Tensor | None): Decoder input embeddings used
+                for generation. If provided, it will override the input text. Expected shape:
+                  - [1, compression_token_count, hidden_dim]
+
+            Outputs:
+              - if get_align_hidden_states=False:
+                  output_text (str)
+              - if get_align_hidden_states=True:
+                  (output_text, embedding)
+                    - output_text (str)
+                    - embedding (torch.Tensor): [1, hidden_dim]
+            """
             assert isinstance(input_text, str), "input_text must be a string"
             if len(recon_hidden_states.shape) == 2:
                 recon_hidden_states = recon_hidden_states.unsqueeze(0)
