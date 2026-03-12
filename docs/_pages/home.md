@@ -73,8 +73,8 @@ tensor([[0.8750, 0.1182],
 Note that in all examples, the instructions should be as if you are generating the answer to the input. 
 <br>
 Other examples to try LLM2Vec-Gen in other tasks:
-<details>
-<summary> <strong>Sentence Similarity </strong> </summary>
+<details markdown="1">
+<summary><strong>Sentence Similarity</strong></summary>
 
 ```python
 instruction = "Generate text that is semantically similar to this text: "
@@ -103,8 +103,9 @@ tensor([[0.8008, 0.2539],
 """
 ```
 </details>
-<details>
-<summary> <strong>Classification </strong> </summary>
+
+<details markdown="1">
+<summary><strong>Classification</strong></summary>
 
 ```python
 q_instruction = "Classify the emotion expressed in the given text into anger and joy: "
@@ -134,8 +135,9 @@ tensor([[0.8008, 0.6953],
 """
 ```
 </details>
-<details>
-<summary> <strong>Clustering </strong> </summary>
+
+<details markdown="1">
+<summary><strong>Clustering</strong></summary>
 
 ```python
 from sklearn.cluster import KMeans
