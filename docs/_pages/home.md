@@ -72,105 +72,10 @@ tensor([[0.8750, 0.1182],
 
 Note that in all examples, the instructions should be as if you are generating the answer to the input. 
 <br>
-Other examples to try LLM2Vec-Gen in other tasks:
-<details markdown=\"1\">
-<summary><strong>Sentence Similarity</strong></summary>
-
-```python
-instruction = "Generate text that is semantically similar to this text: "
-
-queries = [
-  "The traveler was frustrated because the flight had been delayed for several hours.",
-  "Stars rotate due to the angular momentum of the gas they formed from."
-]
-q_reps = model.encode([instruction + q for q in queries])
-
-pairs = [
-  "A multi-hour wait at the airport left the passenger feeling quite annoyed.",
-  "The rotational motion of a stellar body is a direct consequence of the conservation of angular momentum from its original protostellar cloud.",
-]
-p_reps = model.encode([instruction + p for p in pairs])
-
-# Compute cosine similarity
-q_reps_norm = torch.nn.functional.normalize(q_reps, p=2, dim=1)
-p_reps_norm = torch.nn.functional.normalize(p_reps, p=2, dim=1)
-cos_sim = torch.mm(q_reps_norm, p_reps_norm.transpose(0, 1))
-
-print(cos_sim)
-"""
-tensor([[0.8008, 0.2539],
-        [0.2061, 0.8906]])
-"""
-```
-</details>
-
-<details markdown="1">
-<summary><strong>Classification</strong></summary>
-
-```python
-q_instruction = "Classify the emotion expressed in the given text into anger and joy: "
-p_instruction = "Summarize this text: "
-
-queries = [
-  "I just feel irritated right now",
-  "I'm feeling really thrilled and excited",
-]
-q_reps = model.encode([q_instruction + q for q in queries])
-
-pairs = [
-  "This text is classified as \"angry\".",
-  "This text is classified as \"joy\".",
-]
-p_reps = model.encode([p_instruction + p for p in pairs])
-
-# Compute cosine similarity
-q_reps_norm = torch.nn.functional.normalize(q_reps, p=2, dim=1)
-p_reps_norm = torch.nn.functional.normalize(p_reps, p=2, dim=1)
-cos_sim = torch.mm(q_reps_norm, p_reps_norm.transpose(0, 1))
-
-print(cos_sim)
-"""
-tensor([[0.8008, 0.6953],
-        [0.7070, 0.8008]])
-"""
-```
-</details>
-
-<details markdown="1">
-<summary><strong>Clustering</strong></summary>
-
-```python
-from sklearn.cluster import KMeans
-
-instruction = "Cluster the following Amazon review: "
-
-sentences = [
-  "This product is amazing and I love it",
-  "Fantastic experience, highly recommend",
-  "Terrible quality, total waste of money",
-  "Awful product, very disappointed",
-]
-
-reps = model.encode([instruction + s for s in sentences])
-reps = reps.float().cpu().numpy()
-
-labels = KMeans(n_clusters=2, random_state=0).fit_predict(reps)
-
-for s, l in zip(sentences, labels):
-  print(f"[{l}] {s}")
-
-"""
-[1] This product is amazing and I love it
-[1] Fantastic experience, highly recommend
-[0] Terrible quality, total waste of money
-[0] Awful product, very disappointed
-"""
-```
-</details>
+Other examples to try LLM2Vec-Gen in other tasks (e.g., classification and clustering) are presented in the paper's [GitHub repository](https://github.com/McGill-NLP/llm2vec-gen/).
 
 
 <br>
-
 LLM2Vec-Gen provides interpretable embeddings. You can use the following code to **decode the content** embedded in the embeddings:
 
 ```python
