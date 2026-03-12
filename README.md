@@ -71,6 +71,8 @@ tensor([[0.8750, 0.1182],
 """
 ```
 
+Note that in all examples, the instructions should be as if you are generating the answer to the input. 
+<br>
 Other examples to try LLM2Vec-Gen in other tasks:
 <details>
 <summary> <strong>Sentence Similarity </strong> </summary>
