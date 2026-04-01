@@ -24,7 +24,7 @@ for model in "qwen3-1.7" "qwen3-4"; do
     model.pretrained_teacher_path=${teacher_path} \
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup
 
     # supervised teacher + original echo responses
@@ -37,7 +37,7 @@ for model in "qwen3-1.7" "qwen3-4"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=tulu \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-echo-rewritten-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-echo-original
     
     # supervised teacher + LLM-generated echo responses
@@ -50,7 +50,7 @@ for model in "qwen3-1.7" "qwen3-4"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-echo-rewritten-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-echo-${model}
 
     # 2GPU
@@ -72,7 +72,7 @@ for model in "qwen3-1.7" "qwen3-4"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-tulu-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-tulu-${model}-hard-neg-th-${th}-lora
 
 
@@ -92,7 +92,7 @@ for model in "qwen3-1.7" "qwen3-4"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-tulu-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-tulu-${model}-hard-neg-th-${th}
 
     # 2GPU
@@ -114,7 +114,7 @@ for model in "qwen3-1.7" "qwen3-4"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-echo-rewritten-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-echo-${model}-hard-neg-th-${th}-lora
 done
 
@@ -140,7 +140,7 @@ for model in "qwen3-8"; do
     model.pretrained_teacher_path=${teacher_path} \
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup
 
     # 2GPU
@@ -154,7 +154,7 @@ for model in "qwen3-8"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=tulu \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-echo-rewritten-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-echo-original
 
     # 2GPU
@@ -168,7 +168,7 @@ for model in "qwen3-8"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-echo-rewritten-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-echo-${model}
 
     # 4GPU
@@ -190,7 +190,7 @@ for model in "qwen3-8"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-tulu-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-tulu-${model}-hard-neg-th-${th}-lora
 
     # 4GPU
@@ -209,7 +209,7 @@ for model in "qwen3-8"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-tulu-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-tulu-${model}-hard-neg-th-${th}
 
     # 4GPU
@@ -231,7 +231,7 @@ for model in "qwen3-8"; do
     model.pretrained_teacher_path_2=${teacher_path}-supervised \
     data=$model \
     data.hf_dataset_name=McGill-NLP/llm2vec-gen-echo-rewritten-w-hard-negative \
-    special_tokens=total_20 \
+    special_tokens=total_10 \
     run.wandb_run_id=$model-teacher-llm2vec-sup-data-echo-${model}-hard-neg-th-${th}-lora
 
 done

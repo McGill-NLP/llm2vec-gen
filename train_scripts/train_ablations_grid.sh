@@ -36,7 +36,7 @@ for teacher in "qwen3-0.6b" "qwen3-1.7b" "qwen3-4b" "qwen3-8b"; do
         model.pretrained_teacher_path=${teacher_path} \
         model.pretrained_teacher_path_2=${teacher_path}-unsup-simcse \
         data=$data \
-        special_tokens=total_20 \
+        special_tokens=total_10 \
         run.wandb_run_id=$model-teacher-llm2vec-${teacher}-data-${data} \
         >> /home/toolkit/generative-embeddings-clean/logs/llm2vec-gen-${model}-teacher-llm2vec-${teacher}-data-${data}.log 2>&1"
     done
