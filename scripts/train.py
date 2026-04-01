@@ -346,31 +346,36 @@ def main(cfg: DictConfig) -> None:
 
     teacher_tokenizer, teacher_special_tokens, teacher_model = None, None, None
     if model_args.pretrained_teacher_path is not None:
-        peft_config = PeftConfig.from_pretrained(model_args.pretrained_teacher_path)
-        base_model_name_or_path = peft_config.base_model_name_or_path
-        teacher_tokenizer = AutoTokenizer.from_pretrained(model_args.pretrained_teacher_path if "mntp" in model_args.pretrained_teacher_path else base_model_name_or_path)
-        if teacher_tokenizer.pad_token is None:
-            teacher_tokenizer.pad_token = teacher_tokenizer.eos_token
-        teacher_tokenizer.padding_side = "left"
-        teacher_special_tokens = []
+        if "bge" in model_args.pretrained_teacher_path.lower():
+            teacher_tokenizer = AutoTokenizer.from_pretrained(model_args.pretrained_teacher_path)
+            teacher_model = AutoModel.from_pretrained(model_args.pretrained_teacher_path)
+            teacher_model.eval()
+        else:
+            peft_config = PeftConfig.from_pretrained(model_args.pretrained_teacher_path)
+            base_model_name_or_path = peft_config.base_model_name_or_path
+            teacher_tokenizer = AutoTokenizer.from_pretrained(model_args.pretrained_teacher_path if "mntp" in model_args.pretrained_teacher_path else base_model_name_or_path)
+            if teacher_tokenizer.pad_token is None:
+                teacher_tokenizer.pad_token = teacher_tokenizer.eos_token
+            teacher_tokenizer.padding_side = "left"
+            teacher_special_tokens = []
 
-        teacher_config = AutoConfig.from_pretrained(model_args.pretrained_teacher_path if "mntp" in model_args.pretrained_teacher_path else base_model_name_or_path, trust_remote_code=True)
+            teacher_config = AutoConfig.from_pretrained(model_args.pretrained_teacher_path if "mntp" in model_args.pretrained_teacher_path else base_model_name_or_path, trust_remote_code=True)
 
-        teacher_model = AutoModel.from_pretrained(
-            model_args.pretrained_teacher_path if "mntp" in model_args.pretrained_teacher_path else base_model_name_or_path,
-            trust_remote_code=True,
-            config=teacher_config,
-            torch_dtype=torch.bfloat16,
-            attn_implementation="flash_attention_2",
-        )
-        teacher_model = PeftModel.from_pretrained(teacher_model, model_args.pretrained_teacher_path)
-        teacher_model = teacher_model.merge_and_unload() if "mntp" in model_args.pretrained_teacher_path else teacher_model
+            teacher_model = AutoModel.from_pretrained(
+                model_args.pretrained_teacher_path if "mntp" in model_args.pretrained_teacher_path else base_model_name_or_path,
+                trust_remote_code=True,
+                config=teacher_config,
+                torch_dtype=torch.bfloat16,
+                attn_implementation="flash_attention_2",
+            )
+            teacher_model = PeftModel.from_pretrained(teacher_model, model_args.pretrained_teacher_path)
+            teacher_model = teacher_model.merge_and_unload() if "mntp" in model_args.pretrained_teacher_path else teacher_model
 
-        if model_args.pretrained_teacher_path_2 is not None:
-            teacher_model = PeftModel.from_pretrained(teacher_model, model_args.pretrained_teacher_path_2)
+            if model_args.pretrained_teacher_path_2 is not None:
+                teacher_model = PeftModel.from_pretrained(teacher_model, model_args.pretrained_teacher_path_2)
 
-        for name, param in teacher_model.named_parameters():
-            param.requires_grad = False
+            for name, param in teacher_model.named_parameters():
+                param.requires_grad = False
 
 
     config_kwargs = {
