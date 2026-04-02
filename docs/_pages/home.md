@@ -17,7 +17,7 @@ header:
           url: "https://huggingface.co/collections/McGill-NLP/llm2vec-gen"
           icon: "fas fa-robot"
         - label: "WandB Logs"
-          url: "https://wandb.ai/siva-reddy-mila-org/llm2vec-gen"
+          url: "https://wandb.ai/siva-reddy-mila-org/llm2vec--gen"
           icon: "fas fa-chart-bar"
         
 
