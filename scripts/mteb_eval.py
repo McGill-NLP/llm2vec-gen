@@ -16,14 +16,14 @@ from llm2vec_gen import LLM2VecGenModel
 SMALL_TASKS = [
     "ArguAna",
     "ClimateFEVERHardNegatives",
-    "MindSmallReranking",
+    "AskUbuntuDupQuestions",
     "ArXivHierarchicalClusteringP2P",
-    "MedrxivClusteringS2S.v2",
+    "MedrxivClusteringP2P.v2",
     "SprintDuplicateQuestions",
     "Banking77Classification",
-    "MTOPDomainClassification",
-    "STS14",
-    "STS22.v2",
+    "ImdbClassification",
+    "BIOSSES"
+    "STS17",
 ]
 
 def corpus_to_texts(

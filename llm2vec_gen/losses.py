@@ -132,19 +132,26 @@ def compute_contrastive_loss(queries, positives, negatives, scale=1.0, function=
 
 def get_teacher_embeddings(input_ids, attention_mask, teacher_model, student_encoder_states=None):
     
-    assert isinstance(teacher_model, PeftModel) or isinstance(teacher_model, AutoModel)
+    assert isinstance(teacher_model, PeftModel) or isinstance(teacher_model, AutoModel) or teacher_model.config.model_type == "xlm-roberta"
     teacher_model.to(student_encoder_states.device if student_encoder_states is not None else 'cuda')
     
     if not hasattr(teacher_model, "encode"):
-        outputs = teacher_model(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-        )
-        attention_mask = attention_mask.unsqueeze(-1)
-        embeddings = outputs.last_hidden_state * attention_mask
-        sum_embeddings = torch.sum(embeddings, dim=1)
-        sum_mask = torch.clamp(attention_mask.sum(dim=1), min=1e-9)
-        teacher_encoder_states = sum_embeddings / sum_mask
+        if teacher_model.config.model_type == "xlm-roberta":
+            model_output = teacher_model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+            )
+            teacher_encoder_states = model_output[0][:, 0]
+        else:
+            outputs = teacher_model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+            )
+            attention_mask = attention_mask.unsqueeze(-1)
+            embeddings = outputs.last_hidden_state * attention_mask
+            sum_embeddings = torch.sum(embeddings, dim=1)
+            sum_mask = torch.clamp(attention_mask.sum(dim=1), min=1e-9)
+            teacher_encoder_states = sum_embeddings / sum_mask
     else:
         teacher_encoder_states = teacher_model.encode(input_ids, attention_mask)
     teacher_encoder_states = teacher_encoder_states.to(student_encoder_states.dtype if student_encoder_states is not None else torch.float32)
