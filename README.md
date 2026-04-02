@@ -10,7 +10,7 @@ LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encod
 
 
 <p align="center">
-  <img src="./docs/assets/llm2vecgen.gif" width="95%" alt="llm2vecgen_main_figure"/>
+  <img src="./docs/assets/llm2vecgen_main_figure.png" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
 ## Table of Contents
