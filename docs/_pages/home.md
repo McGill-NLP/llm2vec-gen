@@ -28,7 +28,7 @@ excerpt: Parishad BehnamGhader, Vaibhav Adlakha, Fabian David Schmidt, Nicolas C
 LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query itself.
 
 <p align="center">
-  <img src="./assets/llm2vecgen.gif" width="95%" alt="llm2vecgen_main_figure"/>
+  <img src="./assets/llm2vecgen_main_figure.png" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
 
@@ -65,8 +65,8 @@ cos_sim = torch.mm(q_reps_norm, d_reps_norm.transpose(0, 1))
 
 print(cos_sim)
 """
-tensor([[0.8750, 0.1182],
-        [0.0811, 0.9336]])
+tensor([[0.8789, 0.0938],
+        [0.1143, 0.9297]])
 """
 ```
 
@@ -86,7 +86,7 @@ answer = model.generate(recon_hidden_states=recon_hidden_states, max_new_tokens=
 
 print(answer)
 """
-* **\n\n**Disk Cleanup** is a built-in utility in Windows that helps you **free up disk space** by **removing unnecessary files** from your computer. It is designed to clean up temporary files, system cache, and other files that are no longer needed.\n\n
+**Disk Cleanup**" is a built-in utility in Windows that helps you **free up disk space** by **removing unnecessary files** and **temporary data** that are no longer needed. [...]"""
 """
 ```
 This code snippet will return the answer of the LLM2Vec-Gen model generated from the generative embeddings of the input (`recon_hidden_states`).

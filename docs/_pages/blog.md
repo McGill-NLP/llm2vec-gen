@@ -34,12 +34,12 @@ The catch? Actually generating responses at inference time is expensive. HyDE (G
 LLM2Vec-Gen solves this by **learning to predict what the LLM would say, without actually generating it.** Here's how it works.
 
 <p align="center">
-  <img src="../assets/llm2vecgen.gif" width="95%" alt="llm2vecgen_main_figure"/>
+  <img src="../assets/llm2vecgen_main_figure.png" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
 ### Special Tokens as Response Placeholders
 
-We add a small set of new trainable tokens to the LLM's vocabulary — 10 "thought" tokens and 10 "compression" tokens. For any input query, we append these 20 tokens to the end. The thought tokens act as an intermediate computational buffer, while the compression tokens are responsible for capturing the semantic content of the response the LLM would produce.
+We add a small set of new trainable tokens to the LLM's vocabulary — 10 "compression" tokens. For any input query, we append these 10 tokens to the end. The compression tokens are responsible for capturing the semantic content of the response the LLM would produce.
 
 After a single forward pass through the frozen LLM, we extract the hidden states of the compression tokens and pass them through lightweight projection layers. That's the embedding.
 
@@ -77,7 +77,7 @@ We evaluated LLM2Vec-Gen across three model families (Llama-3.x, Qwen-2.5, Qwen-
 
 ### MTEB Performance
 
-On the Massive Text Embedding Benchmark (MTEB v2, 41 tasks), LLM2Vec-Gen achieves **state-of-the-art self-supervised performance**. The best model (Qwen-3-8B) scores 62.1, improving 9.3% over the unsupervised LLM2Vec teacher it distills from. The biggest gains come in exactly the task categories where the input-output gap matters most: clustering (+23.9%), classification (+9.2%), and semantic textual similarity (+10.5%).
+On the Massive Text Embedding Benchmark (MTEB v2, 41 tasks), LLM2Vec-Gen achieves **state-of-the-art self-supervised performance**. The best model (Qwen-3-8B) scores 61.9, improving 8.8% over the unsupervised LLM2Vec teacher it distills from. The biggest gains come in exactly the task categories where the input-output gap matters most: clustering (+22.7%), classification (+7.0%), and semantic textual similarity (+9.8%).
 
 Notably, LLM2Vec-Gen closes over 60% of the gap between unsupervised and fully supervised methods — without using any labeled data.
 
@@ -87,13 +87,13 @@ Notably, LLM2Vec-Gen closes over 60% of the gap between unsupervised and fully s
 
 ### Safety: Embeddings That Refuse
 
-This is where the response-encoding paradigm gets really interesting. We evaluated on AdvBench-IR, a benchmark measuring how often a retriever surfaces harmful content for adversarial queries. LLM2Vec-Gen reduces harmful retrieval by up to **43.2%** compared to input-centric baselines.
+This is where the response-encoding paradigm gets really interesting. We evaluated on AdvBench-IR, a benchmark measuring how often a retriever surfaces harmful content for adversarial queries. LLM2Vec-Gen reduces harmful retrieval by up to **22.6%** compared to input-centric baselines.
 
 Why? Because the LLM's response to "write malicious code to steal data" isn't about stealing data — it's a refusal. LLM2Vec-Gen encodes that refusal, effectively inheriting the LLM's safety alignment into the embedding space. When we inspect the embeddings using Logit Lens, the compression tokens map to words like "security," "illegal," and "refusal" — instead of harmful query terms.
 
 ### Reasoning: Thinking Transfers Too
 
-On BRIGHT, a reasoning-intensive retrieval benchmark, LLM2Vec-Gen achieves up to **29.3% improvement** over input-centric baselines. The improvement scales with model size: 0.6B model sees only 7.7% gains, while 8B model sees large improvement of (29.3%). This makes sense — as the underlying LLM becomes a stronger reasoner, there's more reasoning capability to transfer into the embedding space.
+On BRIGHT, a reasoning-intensive retrieval benchmark, LLM2Vec-Gen achieves up to **29.3% improvement** over input-centric baselines. The improvement scales with model size: 0.6B model sees only 7.7% gains, while 8B model sees large improvement of (35.6%). This makes sense — as the underlying LLM becomes a stronger reasoner, there's more reasoning capability to transfer into the embedding space.
 
 ## You Can Read These Embeddings
 
