@@ -4,7 +4,7 @@
 [![PyPI](https://img.shields.io/pypi/v/llm2vec-gen?label=PyPI)](https://pypi.org/project/llm2vec-gen/)
 [![HF Link](https://img.shields.io/badge/HF%20Models-LLM2Vec--Gen-FFD21E.svg)](https://huggingface.co/collections/McGill-NLP/llm2vec-gen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/McGill-NLP/llm2vec-gen/blob/main/LICENSE)
-[![WandB](https://img.shields.io/badge/WandB-Logs-yellow.svg)](https://wandb.ai/siva-reddy-mila-org/llm2vec-gen)
+[![WandB](https://img.shields.io/badge/WandB-Logs-yellow.svg)](https://wandb.ai/siva-reddy-mila-org/llm2vec--gen)
 
 LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query itself. This repository supports codes for training and evaluation on MTEB, AdvBench-IR, BRIGHT, plus analysis scripts (logit lens, latent lens, and generations).
 
