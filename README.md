@@ -13,6 +13,12 @@ LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encod
   <img src="./docs/assets/llm2vecgen_main_figure.png" width="95%" alt="llm2vecgen_main_figure"/>
 </p>
 
+</br>
+********************************* Updates *********************************
+
+04/02: Added support for training with BGE encoder teacher and updated HF checkpoints.
+
+
 ## Table of Contents
 
 - [Installation](#-installation)
