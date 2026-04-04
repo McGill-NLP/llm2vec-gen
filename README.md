@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/McGill-NLP/llm2vec-gen/blob/main/LICENSE)
 [![WandB](https://img.shields.io/badge/WandB-Logs-yellow.svg)](https://wandb.ai/siva-reddy-mila-org/llm2vec--gen)
 
-LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query itself. This repository supports codes for training and evaluation on MTEB, AdvBench-IR, BRIGHT, plus analysis scripts (logit lens, latent lens, and generations).
+LLM2Vec-Gen is a recipe to train interpretable, generative embeddings that encode the potential answer of an LLM to a query rather than the query itself. This repository supports codes for training and evaluation on MTEB, AdvBench-IR, BRIGHT, plus analysis scripts (logit lens, latent lens, and generations). Feel free to [get started](https://github.com/McGill-NLP/llm2vec-gen/edit/main/README.md) with out best-performing model, [`McGill-NLP/LLM2Vec-Gen-Qwen3-8B`](https://huggingface.co/McGill-NLP/LLM2Vec-Gen-Qwen3-8B) on HuggingFace.
 
 
 <p align="center">
