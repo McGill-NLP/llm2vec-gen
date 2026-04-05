@@ -345,6 +345,14 @@ class EncoderDecoderModel(torch.nn.Module):
             try:
                 from huggingface_hub import hf_hub_download
 
+                try:
+                    _config_path = hf_hub_download(
+                        repo_id=path, 
+                        filename="config.json"
+                    )
+                except:
+                    pass
+
                 run_config_path = hf_hub_download(
                     repo_id=path,
                     filename="run_config.yml",
